@@ -6,13 +6,14 @@ class Army:
         self.fights_lost = 0
         self.loss_of_money = 0
         self.number_of_soldiers = number_of_soldiers
-
+# словарь (одна структура) с похожими данными (победы, поражения)
     @property
     def army_strength(self) -> float:
         return self.number_of_soldiers * (1 + self.fights_total / 100) * (2 + self.fights_won / 100)
 
-    def print_army_info(self):
-        print('Генерал: {}\nОбщее количество битв: {}\nКоличество выигранных битв: {}\nКоличество проигранных битв:'
+# магический метод __repl__
+    def __repr__(self) -> str:
+        return ('Генерал: {}\nОбщее количество битв: {}\nКоличество выигранных битв: {}\nКоличество проигранных битв:'
               '{}\nУбыток денег: {}\nСила армии: {}'.format(self.general, self.fights_total, self.fights_won,
                 self.fights_lost, self.loss_of_money, self.army_strength))
 
@@ -22,8 +23,8 @@ class Economy:
         self.upgrade_cost = upgrade_cost
         self.number_of_upgrades = number_of_upgrades
 
-    def print_economy_info(self):
-        print('Количество улучшений: {}\nСтоимость улучшения: {}'.format(self.number_of_upgrades, self.upgrade_cost))
+    def __repr__(self) -> str:
+        return ('Количество улучшений: {}\nСтоимость улучшения: {}'.format(self.number_of_upgrades, self.upgrade_cost))
 
 
 class Country:
@@ -54,9 +55,9 @@ class Country:
     def number_of_soldiers(self):
         return sum([army.number_of_soldiers for army in self.armies])
 
-    def print_country_info(self):
-        print('Население страны: {}\nКоличество военных: {}\nМирное население: {}\n'
-              'Деньги на экономику: {}\nДеньги на армию: {}\n Название страны: {}\n'
+    def __repr__(self) -> str:
+        return ('Население страны: {}\nКоличество военных: {}\nМирное население: {}\n'
+              'Деньги на экономику: {}\nДеньги на армию: {}\nНазвание страны: {}\n'
               'Доход: {}\nТекущий доход: {}\nВозможное количество рекрутов: {}'.format(self.population,
                 self.number_of_soldiers, self.civilians, self.economy_money, self.army_money, self.country_name,
                 self.income, self.current_income, self.possible_number_of_recruits))

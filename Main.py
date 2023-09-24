@@ -1,5 +1,5 @@
-import Functions
-from Classes import InputError
+from Functions import *
+
 
 countries = {}
 commands = {1: 'Создать страну', 2: 'Информация о стране', 3: 'Информация об экономике страны',
@@ -23,7 +23,7 @@ def country_choice(taken_n=-1) -> int:
             print("Введено не число.")
         except InputError:
             print("Страны под введенном номером не существует.")
-    return int(n) - 1
+    return n
 
 
 while True:
@@ -41,20 +41,21 @@ while True:
             print('Вы еще не создали ни одной страны.')
     match command:
         case 1:
-            country, country_name = Functions.create_country(list(countries.keys()))
+            country, country_name = create_country(list(countries.keys()))
             countries[country.country_name] = country
         case 2:
             n = country_choice()
             country = list(countries.values())[n]
-            country.print_country_info()
+            print(country)
         case 3:
             n = country_choice()
             country = list(countries.values())[n]
-            country.economy.print_economy_info()
+            print(country.economy)
         case 4:
             n = country_choice()
             country = list(countries.values())[n]
-            country.army.print_army_info()
+            army = choose_army(country)
+            print(army)
         case 5:
             if len(countries) == 1:
                 print(f'Стране {list(countries.keys())[0]} не с кем воевать.')
@@ -66,26 +67,26 @@ while True:
             n2 = country_choice(n1)
             country2 = countries[list(countries.keys())[n2]]
             for _ in range(2):
-                Functions.make_a_move(country1, country2)
-                Functions.make_a_move(country2, country1)
+                make_a_move(country1, country2)
+                make_a_move(country2, country1)
         case 6:
             n = country_choice()
             country = list(countries.keys())[n]
             country = countries[country]
-            Functions.recruit_soldiers(country)
+            recruit_soldiers(country)
         case 7:
             n = country_choice()
             country = list(countries.keys())[n]
             country = countries[country]
-            Functions.retire_soldiers(country)
+            retire_soldiers(country)
         case 8:
             n = country_choice()
             country = list(countries.keys())[n]
-            Functions.buy_upgrades(countries[country])
+            buy_upgrades(countries[country])
         case 9:
             n = country_choice()
             country = list(countries.values())[n]
-            country.armies.append(Functions.create_army())
+            country.armies.append(create_army())
         case 10:
             break
         case _:

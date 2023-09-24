@@ -6,12 +6,12 @@ def start_a_war(country1: Country, country2: Country) -> None:
     if country1.army_money <= 0 or not country2.army_money <= 0:
         print(f"Невозможно начать атаку, так как в одной или обеих из выбранных стран нет денег на армию.")
         return
-
+# деньги нужны только на найм
     print(f"Выбор атакующей армии для страны {country1.country_name}:")
     army1 = choose_army(country1)
     print(f"Выбор атакующей армии для страны {country2.country_name}:")
     army2 = choose_army(country2)
-
+# не работает при отсутствии армий
     if not army1 or not army2:
         print(f"Невозможно начать атаку, так как в одной или обеих из стран нет созданных армий.")
         return
@@ -27,7 +27,7 @@ def start_a_war(country1: Country, country2: Country) -> None:
                soldiers_lost1) * army1.army_strength * (country1.army_money if country1.army_money > 0 else 1)
     result2 = (country2.number_of_soldiers + country2.possible_number_of_recruits -
                soldiers_lost2) * army2.army_strength * (country2.army_money if country2.army_money > 0 else 1)
-
+# с 31 до 43 в отдельную ф-цию
     army1.fights_total += 1
     army2.fights_total += 1
 
@@ -41,7 +41,7 @@ def start_a_war(country1: Country, country2: Country) -> None:
     army2.loss_of_money += soldiers_lost2 * 5
     country1.army_money += soldiers_lost2 * 5 - soldiers_lost1 * 5
     country2.army_money += soldiers_lost1 * 5 - soldiers_lost2 * 5
-
+# тоже в отдельную ф-цию до 54
     if result1 > result2:
         army1.fights_won += 1
         army2.fights_lost += 1
@@ -93,6 +93,7 @@ def retire_soldiers(country: Country) -> None:
     print(f"{amount} солдат были отправлены в отставку.")
 
 
+# нет денег -> другое действие, а не while
 def buy_upgrades(country: Country) -> None:
     cost = country.economy.upgrade_cost
     maxamount = country.economy_money // cost
@@ -114,12 +115,12 @@ def buy_upgrades(country: Country) -> None:
     country.economy_money += amount * 1000
 
 
-def create_country(taken_names) -> (Country, str):
+def create_country(taken_names: list[str]) -> (Country, str):
     economy = Economy()
     country = Country()
     for_economy = ["upgrade_cost", "number_of_upgrades"]
     for_country = ["country_name", "population", "economy_money", "army_money", "income"]
-
+# в отдельную ф-цию заполнение страны и отд. для заполнения экономики
     for row in for_economy:
         while True:
             try:
@@ -161,6 +162,7 @@ def create_country(taken_names) -> (Country, str):
     return country, country.country_name
 
 
+# тоже fill_army
 def create_army() -> Army:
     army = Army()
     for_army = ["general", "number_of_soldiers"]
@@ -206,9 +208,12 @@ def choose_army(country: Country) -> Army:
     return country.armies[army_number - 1]
 
 
+# перенести деньги на экономику с армии + еще одно действие
 def economy_stage(active_country: Country) -> None:
     actions = {1: "Купить улучшения", 2: "Пропустить ход"}
+    # убрать zip
     for n, a in zip(actions.keys(), actions.values()): print(f"{n}: {a}")
+    # тоже можно убрать while
     while True:
         try:
             chosen_command = int(input("Введите номер команды: "))
