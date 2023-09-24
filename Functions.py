@@ -28,8 +28,8 @@ def start_a_war(country1: Country, country2: Country) -> None:
     result2 = (country2.number_of_soldiers + country2.possible_number_of_recruits -
                soldiers_lost2) * army2.army_strength * (country2.army_money if country2.army_money > 0 else 1)
 # с 31 до 43 в отдельную ф-цию
-    army1.fights_total += 1
-    army2.fights_total += 1
+    army1.fights_info['fights_total'] += 1
+    army2.fights_info['fights_total'] += 1
 
     army1.number_of_soldiers -= soldiers_lost1
     army2.number_of_soldiers -= soldiers_lost2
@@ -43,13 +43,13 @@ def start_a_war(country1: Country, country2: Country) -> None:
     country2.army_money += soldiers_lost1 * 5 - soldiers_lost2 * 5
 # тоже в отдельную ф-цию до 54
     if result1 > result2:
-        army1.fights_won += 1
-        army2.fights_lost += 1
+        army1.fights_info['fights_won'] += 1
+        army2.fights_info['fights_lost'] += 1
         winner, loser = country1, country2
         wlost, llost = soldiers_lost1, soldiers_lost2
     else:
-        army2.fights_won += 1
-        army1.fights_lost += 1
+        army2.fights_info['fights_won'] += 1
+        army1.fights_info['fights_lost'] += 1
         winner, loser = country2, country1
         wlost, llost = soldiers_lost2, soldiers_lost1
 
