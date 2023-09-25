@@ -23,7 +23,7 @@ def country_choice(taken_n=-1) -> int:
             print("Введено не число.")
         except InputError:
             print("Страны под введенном номером не существует.")
-    return n
+    return n - 1
 
 
 def command_choice() -> int:
@@ -76,7 +76,7 @@ def start():
                 n = country_choice()
                 country = list(countries.values())[n]
                 army = choose_army(country)
-                print(army)
+                print(army) if army else print(f"У страны {country.country_name} нет созданных армий.")
             case 5:
                 manage_war()
             case 6:

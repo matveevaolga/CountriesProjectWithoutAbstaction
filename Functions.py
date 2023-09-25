@@ -48,6 +48,9 @@ def start_a_war(active_country: Country, passive_country: Country) -> bool:
 
 def recruit_soldiers(country: Country, given_army=None) -> bool:
     army = choose_army(country) if not given_army else given_army
+    if not army:
+        print(f"У страны {country.country_name} нет созданных армий.")
+        return False
     try:
         amount = int(input(f"Введите желаемое количество солдат для рекрутинга"
                            f" (всего доступно {country.possible_number_of_recruits})."))
@@ -65,6 +68,9 @@ def recruit_soldiers(country: Country, given_army=None) -> bool:
 
 def retire_soldiers(country: Country) -> bool:
     army = choose_army(country)
+    if not army:
+        print(f"У страны {country.country_name} нет созданных армий.")
+        return False
     try:
         amount = int(input(f"Введите желаемое количество солдат для"
                            f" отставки (всего доступно {army.number_of_soldiers})."))
@@ -262,8 +268,8 @@ def economy_stage(active_country: Country) -> None:
 
 
 def military_stage(active_country: Country, passive_country: Country) -> None:
-    actions = {1: "Нанять солдат", 2: "Отправить солдат в отставку", 3: "Начать войну", 4: "Перевести деньги\
-                на армию с экономики", 5: "Пропустить ход"}
+    actions = {1: "Нанять солдат", 2: "Отправить солдат в отставку",
+               3: "Начать войну", 4: "Перевести деньги на армию с экономики", 5: "Пропустить ход"}
     is_successful = False
     while not is_successful:
         chosen_command = choose_command(actions)
